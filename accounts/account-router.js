@@ -95,4 +95,22 @@ router.put('/:id', (req, res) => {
     });
 });
 
+// DELETE request to delete account from db
+router.delete('/:id', (req, res) => {
+    db('accounts')
+    .where({ id: req.params.id })
+    .del()
+    .then(count => {
+        res
+        .status(200)
+        .json({ message: `${count} record(s) deleted.` });
+    })
+    .catch(err => {
+        console.log('Error deleting account.', err);
+        res
+        .status(500)
+        .json({ error: 'Error deleting account.' });
+    });
+});
+
 module.exports = router;
